@@ -9,20 +9,20 @@
 -- );
 
 -- -- Add item to DB-table
-INSERT INTO burgers (
-  name,
-  description,
-  price,
-  kcal
-) VALUES (
-  "Big Mac",
-  "McDonalds Signature Burger",
-  15.99,
-  2000000
-);
+-- INSERT INTO burgers (
+--   name,
+--   description,
+--   price,
+--   kcal
+-- ) VALUES (
+--   "Big Mac",
+--   "McDonalds Signature Burger",
+--   15.99,
+--   2000000
+-- );
 
--- get from DB-table
-SELECT * FROM burgers;
+-- -- get from DB-table
+-- SELECT * FROM burgers;
 
 -- -- edit record
 -- UPDATE burgers SET
