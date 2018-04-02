@@ -27,7 +27,7 @@ namespace burger_shack
     [HttpGet("{id}")]
     public Burger Get(int id)
     {
-      return id > -1 && id < Burgers.Count - 1 ? Burgers[id] : null;
+      return id > -1 && id < Burgers.Count ? Burgers[id] : null;
     }
 
     [HttpPost]
@@ -40,6 +40,24 @@ namespace burger_shack
       return Burgers;
     }
 
+    [HttpPut("{id}")]
+    public IEnumerable<Burger> PutBurger(int id, [FromBody]Burger burger)
+    {
+      if(ModelState.IsValid && id > -1 && id < Burgers.Count)
+      {
+        Burgers[id] = burger;
+      }
+      return Burgers;
+    }
 
+    [HttpDelete("{id}")]
+    public IEnumerable<Burger> DeleteBurger(int id)
+    {
+      if (id > -1 && id < Burgers.Count)
+      {
+        Burgers.RemoveAt(id);
+      }
+      return Burgers;
+    }
   }
 }
