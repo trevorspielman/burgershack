@@ -37,8 +37,9 @@ export default new vuex.Store({
         .then(res => {
           delete res.data.Name
           delete res.data.Id
+          res.data.Password = payload.password
           dispatch('login', res.data)
-          alert("Thank You for Creating an Account")
+          // alert("Thank You for Creating an Account")
         })
         .catch(err => {
           console.error(err)
