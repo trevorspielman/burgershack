@@ -13,7 +13,7 @@ namespace burger_shack.Models
     [Required]
     [EmailAddress]
     public string Email { get; set; }
-    [Required]
+    [Required, MinLength(4)]
     public string Password { get; set; }
   }
 
@@ -25,7 +25,7 @@ namespace burger_shack.Models
     [Required]
     [EmailAddress]
     public string Email { get; set; }
-    [Required]
+    [Required, MinLength(4)]
     public string Password { get; set; }
   }
   public class UserReturnModel
@@ -53,13 +53,22 @@ namespace burger_shack.Models
   {
     [Required]
     public string Email { get; set; }
-    [Required]
+    [Required, MinLength(4)]
     public string Password { get; set; }
   }
   public class UserPublicModel
   {
     public string Name { get; set; }
-
+  }
+  public class ChangeUserPasswordModel
+  {
+    public string Id { get; set; }
+    [MaxLength(255), EmailAddress]
+    public string Email { get; set; }
+    [Required, MinLength(4)]
+    public string OldPassword { get; set; }
+    [Required, MinLength(4)]
+    public string NewPassword { get; set; }
   }
 
 }

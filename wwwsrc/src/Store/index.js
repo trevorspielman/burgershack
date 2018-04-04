@@ -39,7 +39,6 @@ export default new vuex.Store({
           delete res.data.Id
           res.data.Password = payload.password
           dispatch('login', res.data)
-          // alert("Thank You for Creating an Account")
         })
         .catch(err => {
           console.error(err)
@@ -50,12 +49,36 @@ export default new vuex.Store({
       auth.post('login', payload)
         .then(res => {
           commit('updateUser', res.data)
-          // alert("Login Successful")
           router.push({ name: 'Profile' })
         })
         .catch(err => {
           console.error(err)
         })
-    }
+    },
+    logout({ commit, dispatch }, payload) {
+      auth.delete('logout')
+        .then(res => {
+          commit('updateUser', {})
+          router.push({ name: 'Home' })
+        })
+        .catch(err => {
+          console.error(err)
+        })
+    },
+    authenticate({ commit, dispatch }, payload) {
+      auth.get('authenticate', payload).then(res => {
+        commit('updateUser', res.data)
+        if (res.data == "") {
+          router.push({ name: 'Home' })
+        }
+        else {
+          router.push({ name: 'Profile' })
+        }
+      })
+        .catch(err => {
+          console.error(err);
+          router.push({ name: 'Home' })
+        })
+    },
   }
 })

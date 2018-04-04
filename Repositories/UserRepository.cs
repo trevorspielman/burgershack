@@ -96,11 +96,39 @@ namespace burger_shack.Repositories
       return null;
 
     }
-    // public string ChangeUserPassword(ChangeUserPasswordModel user)
-    // {
-    //   user savedUser = _db.QueryFirstOrDefault<User>(@"
-    //   SELECT * FROM users WHERE id = @Id
-    //   ", user);
-    // }
+
+    internal UserReturnModel GetUserByEmail(string email)
+    {
+      User user = _db.QueryFirstOrDefault<User>(@"
+      SELECT * FROM users WHERE email = @Email
+      ", new { Email = email });
+      if (user == null) { throw new Exception("Oh Boy, something very bad happened. Hacking in session"); }
+      return new UserReturnModel()
+      {
+        Id = user.Id,
+        Name = user.Name,
+        Email = user.Email
+      };
+    }
+    public string ChangeUserPassword(ChangeUserPasswordModel user)
+    {
+      User savedUser = _db.QueryFirstOrDefault<User>(@"
+      SELECT * FROM users WHERE id = @Id
+      ", user);
+
+      var valid = BCrypt.Net.BCrypt.Verify(user.OldPassword, savedUser.Password);
+      if (valid)
+      {
+        user.NewPassword = BCrypt.Net.BCrypt.HashPassword(user.NewPassword);
+        var i = _db.Execute(@"
+                    UPDATE users SET
+                        password = @NewPassword
+                    WHERE id = @id
+                ", user);
+        return "Good Job";
+      }
+      return "Umm nope!";
+    }
+
   }
 }

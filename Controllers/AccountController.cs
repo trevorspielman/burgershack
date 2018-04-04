@@ -77,5 +77,37 @@ namespace burger_shack.Controllers
       return _repo.UpdateAccount(user, userData);
     }
 
+    [Authorize]
+    [HttpPut("change-password")]
+    public string ChangePassword([FromBody]ChangeUserPasswordModel user)
+    {
+      if (ModelState.IsValid)
+      {
+        var email = HttpContext.User.Claims.Where(c => c.Type == ClaimTypes.Email)
+               .Select(c => c.Value).SingleOrDefault();
+        var sessionUser = _repo.GetUserByEmail(email);
+
+        if (sessionUser.Id == user.Id)
+        {
+          return _repo.ChangeUserPassword(user);
+        }
+      }
+      return "How did you even get here?";
+    }
+
+    [HttpGet("authenticate")]
+    public UserReturnModel Authenticate()
+    {
+      var user = HttpContext.User;
+      var id = user.Identity.Name;
+      if (id == null)
+      {
+        return null;
+      }
+      else
+      {
+        return _repo.GetUserById(id);
+      }
+    }
   }
 }
