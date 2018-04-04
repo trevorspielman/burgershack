@@ -61,4 +61,5 @@ namespace burger_shack.Models
     public string Name { get; set; }
 
   }
+
 }

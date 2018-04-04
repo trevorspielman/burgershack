@@ -48,6 +48,7 @@ namespace burger_shack
       services.AddMvc();
       services.AddTransient<IDbConnection>(x => CreateDBContext());
       services.AddTransient<BurgerRepository>();
+      services.AddTransient<UserRepository>();
     }
     private IDbConnection CreateDBContext()
     {

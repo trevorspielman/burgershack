@@ -15,11 +15,11 @@ namespace burger_shack.Repositories
       _db = db;
     }
 
-
     public UserReturnModel Register(UserCreateModel userData)
     {
-      string id = new Guid().ToString();
-
+      Guid g;
+      g = Guid.NewGuid();
+      string id = g.ToString();
       User user = new User()
       {
         Id = id,
@@ -96,5 +96,11 @@ namespace burger_shack.Repositories
       return null;
 
     }
+    // public string ChangeUserPassword(ChangeUserPasswordModel user)
+    // {
+    //   user savedUser = _db.QueryFirstOrDefault<User>(@"
+    //   SELECT * FROM users WHERE id = @Id
+    //   ", user);
+    // }
   }
 }
