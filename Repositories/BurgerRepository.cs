@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Data;
 using burger_shack.Models;
 using Dapper;
+using static burger_shack.Models.Burger;
 
 namespace burger_shack.Repositories
 {
@@ -51,6 +52,24 @@ namespace burger_shack.Repositories
       kcal = @Kcal
       WHERE id = @id
       ", burger);
+    }
+
+    public IEnumerable<UserBurgerOrderReport> GetUserBurgerReport(string userId)
+    {
+      return _db.Query<UserBurgerOrderReport>(@"
+        SELECT
+          u.name username,
+          u.email,
+          ob.burgerId,
+          ob.quantity,
+          ob.orderId,
+          b.name burger,
+          b.kcal
+        FROM orderburgers ob
+        JOIN users u ON u.id = ob.userId
+        JOIN burgers b ON b.id = ob.burgerId
+        WHERE userId = @id;
+      ", new { id = userId });
     }
     //DELETEONE
     public void Delete(Burger burger)

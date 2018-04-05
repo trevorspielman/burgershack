@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using burger_shack.Models;
 using burger_shack.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using static burger_shack.Models.Burger;
 
 namespace burger_shack
 {
@@ -52,5 +53,9 @@ namespace burger_shack
     {
       _repo.Delete(burger);
     }
-  }
+
+    [HttpGet("report/{userId}")]
+    public IEnumerable<UserBurgerOrderReport> GetReport(string userId){
+      return _repo.GetUserBurgerReport(userId);
+    }  }
 }

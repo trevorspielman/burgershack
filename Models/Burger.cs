@@ -17,14 +17,15 @@ namespace burger_shack.Models
     public int KCal { get; set; }
     public string Ingredients { get; set; }
 
-    // public Burger(string name, string desc, double price, int kcal, string ingredients)
-    // {
-    //   Name = name;
-    //   Description = desc;
-    //   Price = price;
-    //   KCal = kcal;
-    //   Ingredients = ingredients;
-    // }
+  public class UserBurgerOrderReport
+  {
+    public string OrderId { get; set; }
+    public string Burger { get; set; }
+    public string Username { get; set; }
+    public string Email { get; set; }
+    public int Quantity { get; set; }
+    public int KCal { get; set; }
+  }
   }
 
 }
